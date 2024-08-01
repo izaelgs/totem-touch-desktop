@@ -1,30 +1,30 @@
 <template>
-	<aside class="bg-red-650 col-span-2">
+	<aside class="bg-red-650 col-span-2 h-full">
 		<div
-			@click="() => handleSelectProductType('APPETIZERS')"
+			@click="() => handleSelectProductType('appetizers')"
 			:class="`h-[18.1%] flex justify-center items-center text-white border-y border-indigo-500 cursor-pointer active:bg-amber-450 ${
-				mainStore.productType === 'APPETIZERS' ? 'bg-amber-450' : null
+				mainStore.productType === 'appetizers' ? 'bg-amber-450' : null
 			}`">
 			ENTRADAS
 		</div>
 		<div
-			@click="() => handleSelectProductType('COMBOS')"
+			@click="() => handleSelectProductType('combos')"
 			:class="`h-[18.1%] flex justify-center items-center text-white border-b border-indigo-500 cursor-pointer active:bg-amber-450 ${
-				mainStore.productType === 'COMBOS' ? 'bg-amber-450' : null
+				mainStore.productType === 'combos' ? 'bg-amber-450' : null
 			}`">
 			COMBOS
 		</div>
 		<div
-			@click="() => handleSelectProductType('DRINKS')"
+			@click="() => handleSelectProductType('drinks')"
 			:class="`h-[18.1%] flex justify-center items-center text-white border-b border-indigo-500 cursor-pointer active:bg-amber-450 ${
-				mainStore.productType === 'DRINKS' ? 'bg-amber-450' : null
+				mainStore.productType === 'drinks' ? 'bg-amber-450' : null
 			}`">
 			BEBIDAS
 		</div>
 		<div
-			@click="() => handleSelectProductType('DESSERTS')"
+			@click="() => handleSelectProductType('desserts')"
 			:class="`h-[18.1%] flex justify-center items-center text-white border-b border-indigo-500 cursor-pointer active:bg-amber-450 ${
-				mainStore.productType === 'DESSERTS' ? 'bg-amber-450' : null
+				mainStore.productType === 'desserts' ? 'bg-amber-450' : null
 			}`">
 			SOBREMESAS
 		</div>

@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {},
     colors: {
-      red: { ...colors.red, 650: '#CD1111', },
+      red: { ...colors.red, 650: '#CD1111', 550: '#CD1111' },
       stone: { ...colors.stone, 350: '#A4A4A4', },
       amber: { ...colors.amber, 450: '#FCB23C', },
       white: colors.white,

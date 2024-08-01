@@ -2,18 +2,18 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export type OrderType = 'takeaway' | 'dinein';
-export type ProductType = 'APPETIZERS' | 'COMBOS' | 'DRINKS' | 'DESSERTS';
+export type ProductType = 'appetizers' | 'combos' | 'drinks' | 'desserts';
 
 export enum ProductTypes {
-  APPETIZERS = 'ENTRADAS',
-  COMBOS = 'COMBOS',
-  DRINKS = 'BEBIDAS',
-  DESSERTS = 'SOBREMESAS',
+  appetizers = 'ENTRADAS',
+  combos = 'COMBOS',
+  drinks = 'BEBIDAS',
+  desserts = 'SOBREMESAS',
 }
 
 export const useMainStore = defineStore('main', () => {
   const orderType = ref<OrderType>('dinein');
-  const productType = ref<ProductType>('APPETIZERS');
+  const productType = ref<ProductType>('appetizers');
 
   const selectOrderType = (type: OrderType) => {
     orderType.value = type;

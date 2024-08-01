@@ -5,11 +5,13 @@ interface AxiosStoreState {
   axiosInstance: AxiosInstance;
 }
 
+console.log('VITE_API_BASE_URL', process.env.VITE_API_BASE_URL);
+
 export const useAxiosStore = defineStore({
   id: 'axiosStore',
   state: (): AxiosStoreState => ({
     axiosInstance: axios.create({
-      baseURL: import.meta.env.VITE_API_BASE_URL,
+      baseURL: process.env?.VITE_API_BASE_URL ?? 'http://localhost:3000',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',

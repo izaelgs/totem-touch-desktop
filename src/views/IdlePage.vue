@@ -14,12 +14,12 @@
 			<img
 				src="../assets/bemBoladoLogo.png"
 				alt="Logo"
-				class="mx-7 h-[80%] object-cover" />
+				class="mx-[10%] h-[80%] object-cover" />
 
 			<div class="flex flex-col justify-center items-center">
-				<div class="mb-2 text-white text-4xl">TOQUE PARA COMEÇAR</div>
+				<div class="mb-2 text-white text-[300%]">TOQUE PARA COMEÇAR</div>
 				<div
-					class="text-white text-5xs glegoo-regular absolute bottom-0 end-0 pb-1 pe-3">
+					class="text-white text-[50%] glegoo-regular absolute bottom-0 end-0 pb-1 pe-3">
 					v 1.0.0
 				</div>
 			</div>

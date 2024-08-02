@@ -7,8 +7,22 @@ import type { ProductType } from './MainStore'
 export interface Product {
   id: number
   name: string,
+  description: string,
   imageUrl: string,
   price: number,
+  removableItems: ProductRemovableItem[]
+  addableItems: ProductAddableItem[]
+}
+
+export interface ProductRemovableItem {
+  id: number
+  name: string
+}
+
+export interface ProductAddableItem {
+  id: number
+  name: string
+  price: number
 }
 
 export const useProductStore = defineStore('products', () => {

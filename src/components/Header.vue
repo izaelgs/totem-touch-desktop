@@ -4,7 +4,7 @@
 		class="w-full h-[14.5%] flex justify-center items-center bg-red-650 cursor-pointer relative"
 		aria-hidden="true">
 		<img
-			src="../../assets/bemBoladoLogo.png"
+			src="../assets/bemBoladoLogo.png"
 			alt="Logo"
 			class="mx-7 h-2/3 object-cover" />
 
@@ -15,4 +15,6 @@
 	</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CountryList from './CountryList.vue';
+</script>

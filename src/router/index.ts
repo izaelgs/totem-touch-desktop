@@ -15,8 +15,14 @@ const router = createRouter({
     },
     {
       path: '/dashboard',
-      name: 'Home',
+      name: 'Dashboard',
       component: () => import('../views/Dashboard/Index.vue'),
+    },
+    {
+      path: '/product-complements/:id', // Adiciona o parâmetro de rota
+      name: 'ProductComplements',
+      component: () => import('../views/ProductComplements/Index.vue'),
+      props: true, // Permite passar o parâmetro como props para o componente
     },
   ]
 })

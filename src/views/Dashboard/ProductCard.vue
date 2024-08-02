@@ -1,8 +1,9 @@
 <template>
-	<div class="p-4">
-		<div class="mt-2 relative">
-			<!-- Image -->
-			<div class="mb-4 h-60 rounded relative w-full mt-2 min-h-20">
+	<router-link
+		:to="{ name: 'ProductComplements', params: { id: product.id } }"
+		class="p-4 cursor-pointer">
+		<div class="relative">
+			<div class="mb-3 h-60 rounded relative w-full">
 				<SpinnerComponent
 					v-if="imageLoading"
 					class="absolute inset-0 m-auto" />
@@ -14,25 +15,46 @@
 					@load="imageLoading = false"
 					@error="imageLoading = false" />
 			</div>
-			<div class="h-6 hind-semibold text-red-550">{{ product.name }}</div>
-			<div class="h-4 hind-regular w-full mb-2">Com pedaços de queijo e bacon completo.</div>
-			<div class="flex justify-end">
-				<div class="h-4 hind-semibold text-red-550">R$ 30,00</div>
+			<div class="hind-semibold text-red-550 text-2xl mb-3">
+				{{ product.name }}
 			</div>
+			<div class="hind-regular w-full text-lg leading-4">
+				{{ product.description}}
+			</div>
+			<div class="flex pb-8 justify-end border-b border-stone-350">
+				<div class="hind-semibold text-red-550 text-lg leading-4">
+					{{ product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 , style: 'currency', currency: 'BRL' }) }}
+				</div>
+			</div>
+      <div
+        class="rounded-full w-10 h-10 flex justify-center items-center bg-red-650 text-white absolute -right-4 -top-4"
+        v-if="
+          cartStore.cartItems.find(
+            p => p.product.id === product.id
+          )
+        ">
+        <Icon
+          height="33"
+          icon="material-symbols-light:check" />
+      </div>
 		</div>
-	</div>
+	</router-link>
 </template>
 
 <script setup lang="ts">
 import { defineProps, ref, onMounted } from "vue";
 import SpinnerComponent from "../../components/SpinnerComponent.vue";
 import { Product } from "../../stores/ProductStore";
+import { useCartStore } from "../../stores/CartStore";
+import { Icon } from "@iconify/vue";
 
 const props = defineProps<{
 	product: Product;
 }>();
 
 const imageLoading = ref(true);
+
+const cartStore = useCartStore();
 
 onMounted(() => {
 	if (!props.product.imageUrl) {

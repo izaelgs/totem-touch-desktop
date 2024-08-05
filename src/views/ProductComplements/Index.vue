@@ -68,7 +68,7 @@
 								class="rounded-full w-10 h-10 flex justify-center items-center bg-red-650 text-white absolute -right-4 -top-4"
 								v-if="
 									selectedRemovableItems.find(
-										r => r.id === removableItem.id
+										(r) => r.id === removableItem.id
 									)
 								">
 								<Icon
@@ -118,9 +118,9 @@
 								</div>
 								<div class="hind-regular text-xl mx-2">
 									{{
-										selectedAddableItems.filter(
+										selectedAddableItems.find(
 											(item) => item.id === addableItem.id
-										).length
+										)?.quantity ?? 0
 									}}
 								</div>
 								<div
@@ -176,14 +176,16 @@ import {
 import Header from "../../components/Header.vue";
 import SpinnerComponent from "../../components/SpinnerComponent.vue";
 import { Icon } from "@iconify/vue";
-import { useCartStore } from "../../stores/CartStore";
+import { CartAddableItem, useCartStore } from "../../stores/CartStore";
 import { toast } from "vue3-toastify";
 import { AppException } from "../../main";
+import { useFlashStore } from "../../stores/FlashStore";
 
 const route = useRoute();
 const router = useRouter();
 const cartStore = useCartStore();
 const productStore = useProductStore();
+const flashStore = useFlashStore();
 
 const productId = ref(Number(route.params.id));
 const totalValue = ref();
@@ -192,18 +194,19 @@ const stage = ref<"removableItems" | "addableItems">("removableItems");
 
 const product = computed(() => {
 	const product = productStore.products.find((p) => p.id === productId.value);
-  const cartProduct = cartStore.cartItems.find((p) => p.product.id === productId.value);
+	const cartProduct = cartStore.cartItems.find(
+		(p) => p.product.id === productId.value
+	);
 
 	if (!product) {
 		router.push({ name: "Dashboard" });
 		return undefined;
 	}
 
-  if(cartProduct) {
-    console.log('removableItems', cartProduct.removableItems.length);
-    selectedRemovableItems.value = cartProduct.removableItems;
-    selectedAddableItems.value = cartProduct.addableItems;
-  }
+	if (cartProduct) {
+		selectedRemovableItems.value = cartProduct.removableItems;
+		selectedAddableItems.value = cartProduct.addableItems;
+	}
 
 	totalValue.value = product.price;
 
@@ -211,7 +214,7 @@ const product = computed(() => {
 });
 
 const selectedRemovableItems = ref<ProductRemovableItem[]>([]);
-const selectedAddableItems = ref<ProductAddableItem[]>([]);
+const selectedAddableItems = ref<CartAddableItem[]>([]);
 
 const removableItemsCount = computed(() => {
 	return product.value?.removableItems.length;
@@ -243,40 +246,93 @@ const handleSelectRemovableItem = (removableItem: ProductRemovableItem) => {
 
 const handleSelectAddableItem = (addableItem: ProductAddableItem) => {
 	totalValue.value += addableItem.price;
-	selectedAddableItems.value.push(addableItem);
+
+	const previousItem = selectedAddableItems.value.find(
+		(item) => item.id === addableItem.id
+	);
+
+	if (previousItem) {
+		selectedAddableItems.value = selectedAddableItems.value.map((item) =>
+      item.id === addableItem.id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    );
+	} else {
+		selectedAddableItems.value.push({
+			...addableItem,
+			quantity: 1,
+		});
+	}
 };
 
 const handleRemoveAddableItem = (addableItem: ProductAddableItem) => {
+  const previousItem = selectedAddableItems.value.find(
+    (item) => item.id === addableItem.id
+  );
+
+  if(!previousItem) return;
+
 	const addableItemIndex = selectedAddableItems.value.findIndex(
 		(item) => item.id === addableItem.id
 	);
 
 	totalValue.value -= addableItem.price;
 
-	selectedAddableItems.value.splice(addableItemIndex, 1);
+
+	if (previousItem?.quantity > 1) {
+		selectedAddableItems.value = selectedAddableItems.value.map((item) =>
+      item.id === addableItem.id
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    );
+	} else {
+    selectedAddableItems.value.splice(addableItemIndex, 1);
+	}
+
 };
 
 const imageLoading = ref(true);
 
 const handleClickNext = () => {
-  try {
-    if (stage.value === "removableItems") {
-      return (stage.value = "addableItems");
-    }
+	try {
+		if (stage.value === "removableItems") {
+			return (stage.value = "addableItems");
+		}
 
-    if(!product.value) throw new AppException('Produto não encontrado.');
+		if (!product.value) throw new AppException("Produto não encontrado.");
 
-    cartStore.addProductToCart(
-      product.value,
-      selectedRemovableItems.value,
-      selectedAddableItems.value
-    );
+		const itemInCart = cartStore.cartItems.find(
+			(item) => item.product.id === product.value?.id
+		);
 
-    router.push({ name: "Dashboard" });
-  } catch (error) {
-    console.error(error);
-    error instanceof AppException ? toast.error(error.message) : toast.error('Ocorreu um erro ao tentar adicionar o item ao carrinho.');
-  }
+		itemInCart
+			? cartStore.updateCartItem(product.value.id, {
+					...itemInCart,
+					removableItems: selectedRemovableItems.value,
+					addableItems: selectedAddableItems.value,
+			  })
+			: cartStore.addProductToCart(
+					product.value,
+					selectedRemovableItems.value,
+					selectedAddableItems.value,
+					1
+			  );
+
+		flashStore.addMessage({
+			message: `<h1>1x ${product.value.name}</h1><h2>adicionado ao pedido</h2>`,
+			type: "success",
+			options: { dangerouslyHTMLString: true },
+		});
+
+		router.push({ name: "Dashboard" });
+	} catch (error) {
+		console.error(error);
+		error instanceof AppException
+			? toast.error(error.message)
+			: toast.error(
+					"Ocorreu um erro ao tentar adicionar o item ao carrinho."
+			  );
+	}
 };
 
 const goBack = () => {

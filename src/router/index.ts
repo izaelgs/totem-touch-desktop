@@ -19,10 +19,15 @@ const router = createRouter({
       component: () => import('../views/Dashboard/Index.vue'),
     },
     {
-      path: '/product-complements/:id', // Adiciona o parâmetro de rota
+      path: '/product-complements/:id',
       name: 'ProductComplements',
       component: () => import('../views/ProductComplements/Index.vue'),
-      props: true, // Permite passar o parâmetro como props para o componente
+      props: true,
+    },
+    {
+      path: '/costumer-identification', // Adiciona o parâmetro de rota
+      name: 'CostumerIdentification',
+      component: () => import('../views/CostumerIdentification.vue'),
     },
   ]
 })

@@ -1,11 +1,19 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import type { Product, ProductAddableItem, ProductRemovableItem } from './ProductStore';
+import type { Product, ProductRemovableItem } from './ProductStore';
 
-interface CartItem {
+export interface CartItem {
   product: Product;
   removableItems: ProductRemovableItem[];
-  addableItems: ProductAddableItem[];
+  addableItems: CartAddableItem[];
+  quantity: number;
+}
+
+export interface CartAddableItem {
+  id: number
+  name: string
+  price: number
+  quantity: number
 }
 
 export const useCartStore = defineStore('cart', () => {
@@ -14,9 +22,10 @@ export const useCartStore = defineStore('cart', () => {
   const addProductToCart = (
     product: Product,
     removableItems: ProductRemovableItem[],
-    addableItems: ProductAddableItem[]
+    addableItems: CartAddableItem[],
+    quantity: number
   ) => {
-    cartItems.value.push({ product, removableItems, addableItems });
+    cartItems.value.push({ product, removableItems, addableItems, quantity });
   };
 
   const removeProductFromCart = (productId: number) => {
@@ -25,20 +34,25 @@ export const useCartStore = defineStore('cart', () => {
 
   const updateCartItem = (
     productId: number,
-    removableItems: ProductRemovableItem[],
-    addableItems: ProductAddableItem[]
+    payload: CartItem,
   ) => {
-    const item = cartItems.value.find(item => item.product.id === productId);
-    if (item) {
-      item.removableItems = removableItems;
-      item.addableItems = addableItems;
-    }
+    cartItems.value = cartItems.value.map(cartItem => {
+      if (cartItem.product.id === productId) {
+        return { ...cartItem, ...payload };
+      }
+      return cartItem;
+    });
+  };
+
+  const clearCart = () => {
+    cartItems.value = [];
   };
 
   return {
     cartItems,
     addProductToCart,
     removeProductFromCart,
-    updateCartItem
+    updateCartItem,
+    clearCart,
   };
 });

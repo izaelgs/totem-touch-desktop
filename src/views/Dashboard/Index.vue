@@ -2,7 +2,10 @@
 	<div class="h-screen w-screen bg-white">
 		<Header />
 
-		<div class="grid grid-cols-7 gap-4 h-[85.5%]">
+		<div
+			:class="`grid grid-cols-7 gap-4 ${
+				cartStore.cartItems.length > 0 ? 'h-[77.5%]' : 'h-[85.5%]'
+			}`">
 			<Sidebar />
 
 			<div class="col-span-5 h-full overflow-y-auto custom-scrollbar">
@@ -29,6 +32,10 @@
 				</div>
 			</div>
 		</div>
+
+    <div id="toastContainer"></div>
+
+		<OrderBottomMenu />
 	</div>
 </template>
 
@@ -36,19 +43,30 @@
 import Sidebar from "./Sidebar.vue";
 import { useMainStore, ProductTypes } from "../../stores/MainStore";
 import { useProductStore } from "../../stores/ProductStore";
-import { watch, onMounted } from "vue";
+import { watch, onMounted, computed } from "vue";
 import ProductCard from "./ProductCard.vue";
 import SkeletonProductCard from "./SkeletonProductCard.vue";
 import Header from "../../components/Header.vue";
+import { useCartStore } from "../../stores/CartStore";
+import OrderBottomMenu from "./OrderBottomMenu.vue";
+import { useFlashStore } from "../../stores/FlashStore";
 
 const mainStore = useMainStore();
 const productsStore = useProductStore();
+const cartStore = useCartStore();
+const flashStore = useFlashStore();
+
+const messages = computed(() => flashStore.messages);
 
 const fetchProducts = () => {
 	productsStore.fetchProducts(mainStore.productType);
 };
 
 onMounted(() => {
+	for (const message of flashStore.messages) {
+		flashStore.displayMessage(message);
+	}
+	flashStore.clearMessages();
 	fetchProducts();
 });
 

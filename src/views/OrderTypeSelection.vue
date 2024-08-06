@@ -1,7 +1,7 @@
 <template>
 	<div class="flex flex-col justify-center items-center h-screen w-screen bg-stone-350">
-    <div class="grid grid-cols-2 gap-[10%] h-1/3 w-screen px-6">
-      <div @click="() => selectOrder('takeaway')" class="flex justify-center items-center bg-white rounded-lg drop-shadow-md relative active:border-2 active:border-red-650 cursor-pointer">
+    <div class="grid grid-cols-2 gap-[16%] h-1/3 w-screen px-12">
+      <div @click="() => selectOrder('takeaway')" class="flex justify-center items-center bg-white rounded-lg drop-shadow-md relative active:border-4 active:border-red-600 cursor-pointer">
         <img
           src="../assets/bag.svg"
           alt="Logo"
@@ -9,7 +9,7 @@
         </img>
         <div class="mb-2 text-[110%] md:text-[210%] text-center absolute w-full top-2/3">PARA VIAGEM</div>
       </div>
-      <div @click="() => selectOrder('dinein')" class="flex justify-center items-center bg-white rounded-lg drop-shadow-md relative active:border-2 active:border-red-650 cursor-pointer">
+      <div @click="() => selectOrder('dinein')" class="flex justify-center items-center bg-white rounded-lg drop-shadow-md relative active:border-4 active:border-red-600 cursor-pointer">
         <img
           src="../assets/meal.svg"
           alt="Logo"

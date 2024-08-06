@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: process.env.IS_ELECTRON ? createWebHashHistory(import.meta.env.BASE_URL) : createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -25,9 +25,14 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/costumer-identification', // Adiciona o parâmetro de rota
+      path: '/costumer-identification',
       name: 'CostumerIdentification',
       component: () => import('../views/CostumerIdentification.vue'),
+    },
+    {
+      path: '/payment',
+      name: 'Payment',
+      component: () => import('../views/Payment.vue'),
     },
   ]
 })

@@ -1,0 +1,36 @@
+.hg-theme-default {
+  background-color: transparent !important;
+  font-family: 'Hind';
+}
+.hg-theme-default .hg-row {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+.hg-theme-default .hg-button {
+  display: inline-block;
+  flex-grow: 0 !important;
+}
+.hg-theme-default .hg-button.hg-standardBtn {
+  width: 5rem !important;
+  height: 5rem !important;
+
+  font-family: 'Hind';
+  font-style: normal;
+  color: #000000;
+
+  border-bottom: none;
+  border-radius: none;
+  box-shadow: none;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  @apply bg-transparent text-6xl;
+}
+.hg-theme-default .hg-button.simple-keyboard-space {
+  width: 27rem !important;
+  height: 3.4rem !important;
+
+  background-color: #414141;
+  border-radius: 0.6rem;
+}

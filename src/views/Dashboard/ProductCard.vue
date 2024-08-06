@@ -3,7 +3,7 @@
 		:to="{ name: 'ProductComplements', params: { id: product.id } }"
 		class="p-4 cursor-pointer">
 		<div class="relative">
-			<div class="mb-3 h-60 rounded relative w-full">
+			<div class="mb-3 h-56 rounded relative w-full">
 				<SpinnerComponent
 					v-if="imageLoading"
 					class="absolute inset-0 m-auto" />
@@ -19,24 +19,29 @@
 				{{ product.name }}
 			</div>
 			<div class="hind-regular w-full text-lg leading-4">
-				{{ product.description}}
+				{{ product.description }}
 			</div>
 			<div class="flex pb-8 justify-end border-b border-stone-350">
 				<div class="hind-semibold text-red-550 text-lg leading-4">
-					{{ product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 , style: 'currency', currency: 'BRL' }) }}
+					{{
+						product.price.toLocaleString("pt-BR", {
+							minimumFractionDigits: 2,
+							style: "currency",
+							currency: "BRL",
+						})
+					}}
 				</div>
 			</div>
-      <div
-        class="rounded-full w-10 h-10 flex justify-center items-center bg-red-650 text-white absolute -right-4 -top-4"
-        v-if="
-          cartStore.cartItems.find(
-            p => p.product.id === product.id
-          )
-        ">
-        <Icon
-          height="33"
-          icon="material-symbols-light:check" />
-      </div>
+			<div
+				class="rounded-full w-10 h-10 flex justify-center items-center bg-red-650 text-white hind-semibold text-xl leading-3 pt-1 absolute right-6 top-4"
+				v-if="
+					cartStore.cartItems.find((p) => p.product.id === product.id)
+				">
+				{{
+					cartStore.cartItems.find((p) => p.product.id === product.id)
+						?.quantity
+				}}
+			</div>
 		</div>
 	</router-link>
 </template>

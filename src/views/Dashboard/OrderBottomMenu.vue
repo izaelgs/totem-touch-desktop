@@ -21,6 +21,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="flex flex-row items-center">
 			<div class="text-2xl text-white hind-semibold me-8">
 				{{ itemsCount }} Item{{ itemsCount > 1 ? "s" : "" }}
@@ -157,7 +158,7 @@
 								<Icon
 									height="33"
 									icon="material-symbols-light:arrow-back-ios-new"
-									class="me-2" />
+									class="absolute start-0 mx-2" />
 								Continuar comprando
 							</button>
 							<router-link
@@ -231,9 +232,6 @@ const cancelOrder = () => {
 	router.push({ name: "IdlePage" });
 };
 
-const goBack = () => {
-	router.push({ name: "Dashboard" });
-};
 </script>
 
 <style scoped>

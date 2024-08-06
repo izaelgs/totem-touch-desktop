@@ -1,11 +1,14 @@
-<script setup lang="ts"></script>
-
 <template>
-	<div class="flex flex-col h-screen w-screen bg-red-650 relative">
+	<div class="flex flex-col h-screen w-screen bg-red-100 relative">
 		<img
 			src="../assets/idleBackground.png"
 			alt="Logo"
 			class="w-full h-[80%] object-cover" />
+
+		<div
+			class="flex justify-end gap-1 md:gap-2 w-screen p-[2%] absolute top-0">
+			<CountryList />
+		</div>
 
 		<router-link
 			to="order-type-selection"
@@ -27,4 +30,6 @@
 	</div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CountryList from '../components/CountryList.vue';
+</script>

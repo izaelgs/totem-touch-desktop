@@ -9,7 +9,7 @@
 			<Sidebar />
 
 			<div class="col-span-5 h-full overflow-y-auto custom-scrollbar">
-				<h2 class="text-[150%] md:text-[250%] my-[2%]">
+				<h2 class="text-[150%] md:text-[260%] my-[2%]">
 					{{ ProductTypes[mainStore.productType] }}
 				</h2>
 

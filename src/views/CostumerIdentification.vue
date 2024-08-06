@@ -27,7 +27,7 @@
         Deseja inserir CPF/CNPJ na nota?
       </div>
 
-      <div class="grid grid-cols-2 gap-8">
+      <div class="grid grid-cols-2 gap-8 px-24">
         <button
           class="rounded-3xl hind-medium leading-3 text-3xl py-6 flex justify-center items-center cursor-pointer bg-white drop-shadow-md"
           @click="() => updateInput('não', 'cpfQuestion')">

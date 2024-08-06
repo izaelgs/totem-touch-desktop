@@ -19,6 +19,7 @@ export const useCustomerStore = defineStore('customer', () => {
         break;
       case 'cpfQuestion':
         if (input === 'sim') {
+          showCpfQuestion.value = false;
           showCpfInput.value = true;
         } else {
           toggleNextInput();

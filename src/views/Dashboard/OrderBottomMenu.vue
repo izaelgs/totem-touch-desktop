@@ -179,10 +179,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { Icon } from "@iconify/vue";
 import { useRouter } from "vue-router";
 import { CartItem, useCartStore } from "../../stores/CartStore";
+import { getItemPrice } from "../../helpers/MathHelpers";
 
 const router = useRouter();
 const cartStore = useCartStore();
@@ -190,16 +191,6 @@ const cartStore = useCartStore();
 const isDrawerOpen = ref(false);
 
 const itemsCount = cartStore.cartItems.length;
-
-const getItemPrice = (item: CartItem) => {
-	const productPrice = item.product.price;
-	const addablePrice = item.addableItems.reduce(
-		(acc, item) => acc + item.price * item.quantity,
-		0
-	);
-
-	return productPrice + addablePrice;
-};
 
 const handleAddProduct = (item: CartItem) => {
 	cartStore.updateCartItem(item.product.id, {
@@ -219,9 +210,11 @@ const handleRemoveProduct = (item: CartItem) => {
 	}
 };
 
-const totalCartPrice = cartStore.cartItems.reduce((acc, item) => {
-	return acc + getItemPrice(item);
-}, 0);
+const totalCartPrice = computed(() =>
+	cartStore.cartItems.reduce((acc, item) => {
+		return acc + getItemPrice(item);
+	}, 0)
+);
 
 const toggleDrawer = () => {
 	isDrawerOpen.value = !isDrawerOpen.value;
@@ -231,7 +224,6 @@ const cancelOrder = () => {
 	cartStore.clearCart();
 	router.push({ name: "IdlePage" });
 };
-
 </script>
 
 <style scoped>

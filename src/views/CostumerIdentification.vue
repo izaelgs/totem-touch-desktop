@@ -3,6 +3,17 @@
     <div class="flex justify-end gap-1 md:gap-2 w-screen p-[2%] absolute top-0 end-0">
       <CountryList />
     </div>
+    <div class="flex justify-start gap-1 md:gap-2 w-screen p-[2%] absolute top-0 end-0">
+      <div
+        class="pt-1 mt-8 ps-3 pe-4 me-5 cursor-pointer border rounded-2xl w-fit flex justify-center items-center"
+        @click="goBack">
+        <Icon
+          height="33"
+          icon="material-symbols-light:arrow-back-ios-new"
+          class="pe-2" />
+        <div class="leading-4 hind-regular text-lg pt-1">Voltar</div>
+      </div>
+    </div>
 
     <div class="hind-regular w-fit text-5xl leading-7 pb-28 px-12">
       Identificação
@@ -97,14 +108,6 @@ const router = useRouter();
 const goBack = () => {
 	router.push({ name: "Dashboard" });
 };
-
-onMounted(() => {
-  customerStore.costumerName = '';
-  customerStore.costumerCpf = '';
-  customerStore.showNameInput = true;
-  customerStore.showCpfQuestion = false;
-  customerStore.showCpfInput = false;
-});
 
 </script>
 

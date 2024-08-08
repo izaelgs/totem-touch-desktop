@@ -31,5 +31,17 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import CountryList from '../components/CountryList.vue';
+import { useCustomerStore } from '../stores/CustomerStore';
+
+const customerStore = useCustomerStore();
+
+onMounted(() => {
+  customerStore.costumerName = '';
+  customerStore.costumerCpf = '';
+  customerStore.showNameInput = true;
+  customerStore.showCpfQuestion = false;
+  customerStore.showCpfInput = false;
+});
 </script>

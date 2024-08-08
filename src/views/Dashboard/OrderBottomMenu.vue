@@ -14,7 +14,7 @@
 			</button>
 
 			<div
-				class="py-3 px-7 h-fit cursor-pointer border border-white text-white rounded-lg w-fit flex justify-center items-center"
+				class="py-3 lg:px-7 px-4 h-fit cursor-pointer border border-white text-white rounded-lg w-fit flex justify-center items-center"
 				@click="cancelOrder">
 				<div class="leading-4 hind-regular text-lg pt-1">
 					Abandonar pedido

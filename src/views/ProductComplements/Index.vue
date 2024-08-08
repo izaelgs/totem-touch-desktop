@@ -108,7 +108,7 @@
 							<div
 								class="absolute right-0 top-0 h-full flex items-center px-4">
 								<div
-									class="rounded-full w-10 h-10 flex justify-center items-center border-2 cursor-pointer"
+									class="rounded-full lg:w-10 lg:h-10 w-8 h-8 flex justify-center items-center border-2 cursor-pointer"
 									@click="
 										handleRemoveAddableItem(addableItem)
 									">
@@ -124,7 +124,7 @@
 									}}
 								</div>
 								<div
-									class="rounded-full w-10 h-10 flex justify-center items-center bg-red-650 text-white cursor-pointer"
+									class="rounded-full lg:w-10 lg:h-10 w-8 h-8 flex justify-center items-center bg-red-650 text-white cursor-pointer"
 									@click="
 										handleSelectAddableItem(addableItem)
 									">
